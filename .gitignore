@@ -1,0 +1,28 @@
+# Modèles : trop lourds, jamais dans git
+*.gguf
+*.safetensors
+*.bin
+models/
+
+# Secrets
+.env
+*.key
+*.pem
+secrets/
+
+# Sources externes compilées localement (llama.cpp, etc.)
+vendor/
+build/
+
+# Python
+__pycache__/
+.venv/
+*.pyc
+
+# OS / éditeurs
+.DS_Store
+.idea/
+.vscode/
+
+# Données brutes de bench volumineuses (garder les résumés .md/.csv)
+benchmarks/raw/

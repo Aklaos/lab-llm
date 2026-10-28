@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Hook pre-push : refuse tout push qui cible main ou master.
+# Activation (une fois par clone, sur chaque machine) :
+#   git config core.hooksPath scripts/hooks
+#
+# Git fournit sur stdin une ligne par ref poussée :
+#   <local ref> <local sha> <remote ref> <remote sha>
+
+while read -r _local_ref _local_sha remote_ref _remote_sha; do
+  case "$remote_ref" in
+    refs/heads/main|refs/heads/master)
+      echo "✋ Push vers '${remote_ref#refs/heads/}' refusé : passe par une branche + une PR." >&2
+      exit 1
+      ;;
+  esac
+done
+exit 0
