@@ -26,3 +26,6 @@ __pycache__/
 
 # Données brutes de bench volumineuses (garder les résumés .md/.csv)
 benchmarks/raw/
+
+# Réglages Claude Code personnels
+.claude/
