@@ -29,3 +29,8 @@ benchmarks/raw/
 
 # Réglages Claude Code personnels
 .claude/
+
+# Fiches matériel : infos personnelles, restent en local (jamais dans git)
+docs/hardware/*
+!docs/hardware/.gitkeep
+!docs/hardware/README.md
