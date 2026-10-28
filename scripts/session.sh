@@ -145,7 +145,7 @@ cmd_save() {
 
   echo
   echo "Commits qui vont partir sur GitHub (branche $branch) :"
-  git log --oneline '@{u}..HEAD' 2>/dev/null || git log --oneline -5
+  git --no-pager log --oneline '@{u}..HEAD' 2>/dev/null || git --no-pager log --oneline -5
   echo
   confirm "Pousser la branche $branch ?" || { echo "Annulé (rien n'est poussé)."; exit 1; }
   run git push -u origin HEAD
@@ -156,7 +156,7 @@ cmd_done() {
   [[ -z "$(git status --porcelain)" ]] || die "il reste des changements non commités : lance « session.sh save "message" » d'abord."
 
   echo "Commits de la branche $branch non encore sur GitHub :"
-  git log --oneline '@{u}..HEAD' 2>/dev/null || true
+  git --no-pager log --oneline '@{u}..HEAD' 2>/dev/null || true
   confirm "Pousser la branche $branch ?" && run git push -u origin HEAD
 
   run gh pr ready || true     # sort du mode brouillon (sans erreur si déjà prête)
