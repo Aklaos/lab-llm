@@ -16,6 +16,7 @@ Les tickets sont créés sur GitHub par `scripts/bootstrap-github.sh` (source de
 | M0-1 | Charte du dépôt : README, .gitignore, hook pre-push, templates | workflow git propre, hooks |
 | M0-2 | Protéger `main` sur GitHub (ruleset) et vérifier SSH + `gh` sur les 2 machines | sécurité d'un dépôt, auth |
 | M0-3 | Inventaire matériel : `scripts/inventory.sh` + fiches `docs/hardware/` | savoir décrire une machine d'inférence |
+| M0-4 | Script de session `scripts/session.sh` (start / save / done) | automatiser son workflow |
 
 ## M1 Premier contact (semaines 2-3)
 | # | Ticket | Apprentissage visé |

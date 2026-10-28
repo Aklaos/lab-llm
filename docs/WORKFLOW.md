@@ -3,40 +3,49 @@
 Objectif : pouvoir travailler 1 h ici, 2 h là, sur le PC ou le Mac, sans jamais perdre le fil.
 Règle absolue : **on ne pousse jamais sur `main`** (hook local + protection GitHub).
 
-## Ouvrir une session
+Tout passe par un seul script : `scripts/session.sh`.
+
+## 1. Ouvrir une session
 
 ```bash
-git switch main && git pull --ff-only      # repartir d'un main à jour
-gh issue list --milestone "M1 Premier contact"   # choisir un ticket
-gh issue view 7                             # relire le ticket
-git switch -c feat/7-compiler-llama-cpp     # une branche par ticket : <type>/<n°>-<slug>
-cp docs/sessions/_template.md docs/sessions/2026-11-02-pc-7.md   # note de session
+scripts/session.sh start 7
 ```
 
-Types de branche : `feat` (nouvelle capacité), `bench` (mesures), `docs`, `fix`, `chore`.
+Le script, pour le ticket n°7 :
+1. met `main` à jour ;
+2. crée la branche `<type>/7-<titre-du-ticket>` (le type vient du label du ticket) ;
+3. crée la note de session `docs/sessions/AAAA-MM-JJ-<machine>-7.md` ;
+4. commit, pousse la branche, et ouvre une **PR en brouillon** avec `Closes #7` ;
+5. vous laisse prêt à travailler.
 
-## Pendant la session
+Si une branche existe déjà pour ce ticket (session précédente, autre machine), il la **reprend**
+au lieu d'en créer une nouvelle.
 
-- Notez au fil de l'eau dans la note de session : commandes, chiffres, incompréhensions.
-- Petits commits, souvent. Message : `type(#7): ce qui a changé` (ex. `bench(#12): ajoute le script TTFT`).
-- Une session peut s'arrêter en plein ticket : commitez et poussez la branche, vous reprendrez
-  depuis l'autre machine avec `git fetch && git switch feat/7-compiler-llama-cpp`.
+## 2. Pendant la session
 
-## Clôturer une session
+- Remplissez la note de session : commandes, chiffres, incompréhensions.
+- Sauvegardez régulièrement :
 
 ```bash
-git add -A && git status                    # relire ce qui part
-git commit -m "feat(#7): compile llama.cpp en mode CPU"
-git push -u origin HEAD                     # pousse la BRANCHE, jamais main
-gh pr create --fill                         # PR ; le corps contient "Closes #7"
+scripts/session.sh save "ce que j'ai fait"
 ```
 
-Quand le ticket est terminé : relecture de la PR par vous-même (relire son propre diff est un excellent
-exercice), puis `gh pr merge --squash --delete-branch` et retour sur `main` avec `git switch main && git pull`.
+Cela commit tout (`type(#7): ce que j'ai fait`) et pousse la branche.
+Vous pouvez vous arrêter n'importe quand : tout est sur GitHub.
+
+## 3. Clôturer
+
+```bash
+scripts/session.sh done
+```
+
+Vérifie que tout est commité, passe la PR de « brouillon » à « prête », affiche son adresse
+et demande confirmation avant de fusionner (squash), supprimer la branche et revenir sur `main`.
+Répondez `n` si vous voulez d'abord relire la PR dans le navigateur.
 
 ## Deux machines, un dépôt
 
-- Au premier clone sur chaque machine : `git config core.hooksPath scripts/hooks`.
+- Au premier clone sur chaque machine, lancez simplement `scripts/session.sh start <n°>` : il active le hook.
 - Chaque machine a sa fiche dans `docs/hardware/` ; les benchmarks mentionnent toujours la machine.
 - Ne comparez des chiffres que s'ils viennent de la même machine.
 
@@ -44,3 +53,8 @@ exercice), puis `gh pr merge --squash --delete-branch` et retour sur `main` avec
 
 Un milestone regroupe plusieurs tickets d'un même thème (voir [PROGRAMME.md](PROGRAMME.md)).
 Il est terminé quand tous ses tickets sont fermés. On fait alors une courte rétrospective dans `docs/sessions/`.
+
+## Limites connues
+
+- `gh issue view <n>` sans option plante (bug Projects classic) ; utilisez
+  `gh issue view <n> --json title,body --jq '.title, .body'`.
