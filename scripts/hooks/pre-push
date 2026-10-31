@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# NOTE : ce hook n'est plus activé par session.sh (il serait modifiable depuis la box et
+# désactiverait la garde de cb). Conservé comme référence ; ne pas l'activer avec core.hooksPath.
+#
 # Hook pre-push : refuse tout push qui cible main ou master.
 # Activation (une fois par clone, sur chaque machine) :
 #   git config core.hooksPath scripts/hooks

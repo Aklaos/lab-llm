@@ -1,6 +1,6 @@
 # Session AAAA-MM-JJ : ticket #N
 
-- Machine : (PC Linux / MacBook Pro)
+- Machine : (poste-linux-ubuntu / macbook)
 - Durée : 
 - Branche : 
 
