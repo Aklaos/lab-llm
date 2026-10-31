@@ -9,6 +9,7 @@
 # start et done ne demandent aucune confirmation (dépôt à un seul utilisateur) ;
 # save montre la liste des fichiers et demande confirmation.
 # Ne pousse jamais sur main : save et done refusent de tourner sur main.
+# Aucun hook git n'est activé ici : la garde contre le push sur main est celle de cb et de GitHub.
 set -euo pipefail
 
 cd "$(git rev-parse --show-toplevel)"
@@ -31,9 +32,6 @@ confirm() {
 for cmd in git gh python3; do
   command -v "$cmd" >/dev/null || die "commande introuvable : $cmd"
 done
-
-# Active le hook anti-push-sur-main (utile sur un clone neuf, ex. le Mac).
-run git config core.hooksPath scripts/hooks
 
 # Nom générique de la machine pour les notes (jamais le vrai nom d'hôte).
 machine_label() {

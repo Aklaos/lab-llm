@@ -1,7 +1,7 @@
 # Workflow : une session = un ticket = une branche = une PR
 
 Objectif : pouvoir travailler 1 h ici, 2 h là, sur le PC ou le Mac, sans jamais perdre le fil.
-Règle absolue : **on ne pousse jamais sur `main`** (hook local + protection GitHub).
+Règle absolue : **on ne pousse jamais sur `main`** (garde de cb + protection GitHub).
 
 Tout passe par un seul script : `scripts/session.sh`.
 
@@ -45,7 +45,7 @@ supprime la branche, revient sur `main` et le met à jour. Sans aucune confirmat
 
 ## Deux machines, un dépôt
 
-- Au premier clone sur chaque machine, lancez simplement `scripts/session.sh start <n°>` : il active le hook.
+- Au premier clone sur chaque machine, lancez simplement `scripts/session.sh start <n°>`.
 - Chaque machine a sa fiche dans `docs/hardware/` ; les benchmarks mentionnent toujours la machine.
 - Ne comparez des chiffres que s'ils viennent de la même machine.
 

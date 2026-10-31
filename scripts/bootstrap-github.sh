@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# DÉJÀ LANCÉ (créé les tickets une fois) : NE PAS RELANCER, cela créerait des doublons. Gardé comme historique.
 # Crée les labels, milestones et tickets du programme (docs/PROGRAMME.md).
 # À lancer UNE SEULE FOIS, depuis la racine du dépôt, avec `gh` authentifié.
 # Relancer créerait des doublons de tickets.

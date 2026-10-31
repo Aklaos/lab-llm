@@ -10,5 +10,5 @@ Closes #
 
 
 ## Machine
-- [ ] PC Linux
-- [ ] MacBook Pro
+- [ ] poste-linux-ubuntu
+- [ ] macbook
