@@ -23,7 +23,8 @@ au lieu d'en créer une nouvelle.
 
 ## 2. Pendant la session
 
-- Remplissez la note de session : commandes, chiffres, incompréhensions.
+- Remplissez la note de session : commandes, chiffres, observations. Vos rubriques personnelles (ce que vous avez compris, ce qui vous a bloqué) vont dans `/notes/sessions/`, hors du dépôt.
+- `session.sh done` refuse de clôturer tant que la note du dépôt est restée au modèle.
 - Sauvegardez régulièrement :
 
 ```bash

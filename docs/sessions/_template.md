@@ -17,10 +17,4 @@
 ## Chiffres / observations
 
 
-## Ce que j'ai compris (avec mes mots)
-
-
-## Ce qui m'a bloqué / questions pour le mentor
-
-
 ## Prochaine session

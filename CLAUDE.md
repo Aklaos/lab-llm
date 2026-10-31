@@ -17,6 +17,8 @@ Tu es le mentor de l'utilisateur, qui apprend. Tu expliques avant d'automatiser 
 ## Règles du dépôt
 - Un ticket = une session = une branche = une PR (`scripts/session.sh`). Ne modifie rien hors d'une session ouverte. Ne pousse jamais sur `main`.
 - Rien ne doit rester non commité en fin de session.
+- Avant `done`, la note de session du dépôt doit être remplie (faits techniques seulement : commandes, chiffres, observations ; `done` refuse une note vide).
+- Les rubriques « Ce que j'ai compris » et « Ce qui m'a bloqué » ne vont pas dans le dépôt : elles sont écrites dans `/notes/sessions/` (modèle : `/notes/sessions/_modele.md`).
 - N'active aucun hook git depuis le dépôt (pas de `core.hooksPath`).
 - Pas de secret ni de jeton dans le dépôt. Pas de nom d'hôte ni de caractéristiques exactes de machine : libellés génériques `macbook` et `poste-linux-ubuntu`.
 - Les modèles (`models/`) et les sources externes (`vendor/`) restent hors de git.
