@@ -38,11 +38,11 @@ Les tickets sont créés sur GitHub par `scripts/bootstrap-github.sh` (source de
 ## M3 Mesurer (semaines 7-9)
 | # | Ticket | Apprentissage visé |
 |---|---|---|
-| M3-1 | Script de bench : TTFT (temps au premier token) et tokens/s | savoir mesurer, protocole reproductible |
+| M3-1 | Script de bench : TTFT (temps au premier token) et tokens/s · *HF : dataset de benchmarks* | savoir mesurer, protocole reproductible |
 | M3-2 | Concurrence : 1, 2, 4, 8 requêtes simultanées, slots du serveur | débit vs latence |
 | M3-3 | Prometheus + Grafana sur les métriques du serveur | observabilité d'un service LLM |
-| M3-4 | Tableau de dimensionnement `docs/sizing.md` (modèle × quant × contexte → RAM, vitesse) | capacity planning |
-| M3-5 | Mini-évaluation : 20 questions, 2-3 modèles, notation écrite | évaluer la qualité, pas seulement la vitesse |
+| M3-4 | Tableau de dimensionnement `docs/sizing.md` (modèle × quant × contexte → RAM, vitesse) · *HF : Space interactif* | capacity planning |
+| M3-5 | Mini-évaluation : 20 questions, 2-3 modèles, notation écrite · *HF : dataset d'évaluation* | évaluer la qualité, pas seulement la vitesse |
 
 ## M4 GPU et Mac (semaines 10-12)
 | # | Ticket | Apprentissage visé |
@@ -57,7 +57,7 @@ Les tickets sont créés sur GitHub par `scripts/bootstrap-github.sh` (source de
 |---|---|---|
 | M5-1 | LiteLLM devant les modèles : clés, quotas, logs | passerelle LLM, multi-tenant |
 | M5-2 | Routage et fallback entre modèle local et API externe | résilience |
-| M5-3 | Prompt injection : démonstration et mitigations | risques propres aux LLM |
+| M5-3 | Prompt injection : démonstration et mitigations · *HF : Space de démo* | risques propres aux LLM |
 | M5-4 | RAG minimal (embeddings + pgvector ou Qdrant) vu côté infra | ce que les équipes applicatives vous demanderont |
 
 ## M6 Industrialiser et valoriser (semaines 16-20)
@@ -66,7 +66,20 @@ Les tickets sont créés sur GitHub par `scripts/bootstrap-github.sh` (source de
 | M6-1 | Reproductibilité : `make up` ou Ansible pour monter toute la stack | infra as code |
 | M6-2 | CI GitHub Actions : shellcheck, validation Compose, lint | qualité automatisée |
 | M6-3 | k3s : déployer un modèle sur Kubernetes | orchestration, requests/limits mémoire |
-| M6-4 | Portfolio : README final, schéma d'architecture, article de retour d'expérience | raconter son travail |
+| M6-4 | Portfolio : README final, schéma d'architecture, article de retour d'expérience · *HF : article* | raconter son travail |
+
+---
+
+## Publication sur Hugging Face (fil rouge)
+
+Objectif : devenir actif sur HF avec des résultats propres, pas avec des dépôts vides.
+Les tickets marqués *HF* ci-dessus produisent chacun un artefact publiable (dataset, Space ou article).
+
+- On commence **en privé** : chaque dataset ou Space est créé en dépôt privé, relu, puis rendu public quand il est solide.
+- On ne republie pas de modèles quantizés (d'autres le font mieux).
+- Chaque chiffre publié indique : machine (libellé générique, jamais le nom d'hôte), date, version de llama.cpp, modèle exact.
+- Vérifier la licence d'un modèle avant de publier ses réponses.
+- Le jeton HF reste hors du dépôt (jamais dans git).
 
 ---
 
