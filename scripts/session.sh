@@ -3,7 +3,7 @@
 #
 #   scripts/session.sh start <n°>      ouvre la session sur le ticket n°
 #   scripts/session.sh save "message"  commit + push de la branche courante
-#   scripts/session.sh done            commit du reste, push, PR prête, fusion, retour sur main
+#   scripts/session.sh done            refuse une note vide, puis commit du reste, push, PR prête, fusion, retour sur main
 #
 # Transparence : chaque commande git/gh lancée est affichée en orange avec « ▶ ».
 # start et done ne demandent aucune confirmation (dépôt à un seul utilisateur) ;
@@ -150,6 +150,13 @@ cmd_save() {
 
 cmd_done() {
   branch_info
+
+  # Refuse de clôturer si la note de session est restée au modèle.
+  local f
+  for f in docs/sessions/*-"$num".md; do
+    [[ -e "$f" ]] || continue
+    ! grep -q '(une phrase)' "$f" || die "la note $f est restée au modèle : remplis-la avant « done »."
+  done
 
   run git add -A
   if ! git diff --cached --quiet; then
