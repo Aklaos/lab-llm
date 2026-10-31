@@ -40,9 +40,10 @@ Vous pouvez vous arrêter n'importe quand : tout est sur GitHub.
 scripts/session.sh done
 ```
 
-Commite ce qui reste, pousse, passe la PR de « brouillon » à « prête », fusionne (squash),
-supprime la branche, revient sur `main` et le met à jour. Sans aucune confirmation :
-`start` et `done` s'enchaînent directement (dépôt à un seul utilisateur).
+Refuse de clôturer si la note de session est restée au modèle ou contient des rubriques personnelles.
+Sinon : commite ce qui reste, pousse, affiche la liste des fichiers et le diff de la PR, puis demande
+**une confirmation** (`o`) avant de fusionner (squash), supprimer la branche et revenir sur `main`.
+Le dépôt est public : c'est la seule relecture humaine de ce qui est publié. `start` n'en demande aucune.
 
 ## Deux machines, un dépôt
 

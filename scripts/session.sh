@@ -3,11 +3,11 @@
 #
 #   scripts/session.sh start <n°>      ouvre la session sur le ticket n°
 #   scripts/session.sh save "message"  commit + push de la branche courante
-#   scripts/session.sh done            refuse une note vide, puis commit du reste, push, PR prête, fusion, retour sur main
+#   scripts/session.sh done            refuse une note vide, commit du reste, push, relecture du diff + confirmation, fusion, retour sur main
 #
 # Transparence : chaque commande git/gh lancée est affichée en orange avec « ▶ ».
-# start et done ne demandent aucune confirmation (dépôt à un seul utilisateur) ;
-# save montre la liste des fichiers et demande confirmation.
+# start ne demande aucune confirmation ; save en demande deux (commit, push) ;
+# done montre le diff de la PR et demande UNE confirmation avant de fusionner (dépôt public).
 # Ne pousse jamais sur main : save et done refusent de tourner sur main.
 # Aucun hook git n'est activé ici : la garde contre le push sur main est celle de cb et de GitHub.
 set -euo pipefail
@@ -156,6 +156,8 @@ cmd_done() {
   for f in docs/sessions/*-"$num".md; do
     [[ -e "$f" ]] || continue
     ! grep -q '(une phrase)' "$f" || die "la note $f est restée au modèle : remplis-la avant « done »."
+    ! grep -qE "^## (Ce que j'ai compris|Ce qui m'a bloqué)" "$f" \
+      || die "la note $f contient des rubriques personnelles : elles vont dans /notes/sessions/, pas dans le dépôt public."
   done
 
   run git add -A
@@ -165,6 +167,16 @@ cmd_done() {
     run git commit -m "$type(#$num): clôture de la session"
   fi
   run git push -u origin HEAD
+
+  # Dernière relecture humaine : le dépôt est public, tout ce qui est fusionné l'est aussitôt.
+  echo
+  echo "Fichiers de la PR :"
+  git --no-pager diff --stat origin/main...HEAD
+  echo
+  git --no-pager diff origin/main...HEAD
+  echo
+  confirm "Relu : fusionner cette PR (squash) et supprimer la branche ?" \
+    || { echo "Rien n'est fusionné. Relis la PR (gh pr view --web), corrige, puis relance « done »."; exit 0; }
 
   run gh pr ready || true     # sort du mode brouillon (sans erreur si déjà prête)
   gh pr view --json url --jq .url
