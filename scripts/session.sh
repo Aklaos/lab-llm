@@ -3,10 +3,11 @@
 #
 #   scripts/session.sh start <n°>      ouvre la session sur le ticket n°
 #   scripts/session.sh save "message"  commit + push de la branche courante
-#   scripts/session.sh done            PR prête, puis fusion (avec confirmation)
+#   scripts/session.sh done            commit du reste, push, PR prête, fusion, retour sur main
 #
-# Transparence : chaque commande git/gh lancée est affichée en orange avec « ▶ »,
-# et rien n'est commité sans que la liste des fichiers soit montrée et confirmée.
+# Transparence : chaque commande git/gh lancée est affichée en orange avec « ▶ ».
+# start et done ne demandent aucune confirmation (dépôt à un seul utilisateur) ;
+# save montre la liste des fichiers et demande confirmation.
 # Ne pousse jamais sur main : save et done refusent de tourner sur main.
 set -euo pipefail
 
@@ -106,11 +107,9 @@ cmd_start() {
 
   run git add -A
   echo
-  echo "Fichiers qui seront commités dans « $label(#$n): ouvre la session » :"
+  echo "Fichiers commités dans « $label(#$n): ouvre la session » :"
   git status --short
   echo
-  confirm "Commiter, pousser la branche et ouvrir la PR en brouillon ?" \
-    || { echo "Arrêt. Les fichiers restent prêts (stagés) sur la branche $branch."; exit 1; }
 
   run git commit -m "$label(#$n): ouvre la session"
   run git push -u origin HEAD
@@ -153,17 +152,17 @@ cmd_save() {
 
 cmd_done() {
   branch_info
-  [[ -z "$(git status --porcelain)" ]] || die "il reste des changements non commités : lance « session.sh save "message" » d'abord."
 
-  echo "Commits de la branche $branch non encore sur GitHub :"
-  git --no-pager log --oneline '@{u}..HEAD' 2>/dev/null || true
-  confirm "Pousser la branche $branch ?" && run git push -u origin HEAD
+  run git add -A
+  if ! git diff --cached --quiet; then
+    echo "Fichiers commités avant la clôture :"
+    git status --short
+    run git commit -m "$type(#$num): clôture de la session"
+  fi
+  run git push -u origin HEAD
 
   run gh pr ready || true     # sort du mode brouillon (sans erreur si déjà prête)
   gh pr view --json url --jq .url
-  echo
-  confirm "Fusionner cette PR (squash) et supprimer la branche ?" \
-    || { echo "PR prête, non fusionnée. Relis-la puis relance « done »."; exit 0; }
 
   run gh pr merge --squash --delete-branch
   run git switch main

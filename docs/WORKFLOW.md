@@ -39,9 +39,9 @@ Vous pouvez vous arrêter n'importe quand : tout est sur GitHub.
 scripts/session.sh done
 ```
 
-Vérifie que tout est commité, passe la PR de « brouillon » à « prête », affiche son adresse
-et demande confirmation avant de fusionner (squash), supprimer la branche et revenir sur `main`.
-Répondez `n` si vous voulez d'abord relire la PR dans le navigateur.
+Commite ce qui reste, pousse, passe la PR de « brouillon » à « prête », fusionne (squash),
+supprime la branche, revient sur `main` et le met à jour. Sans aucune confirmation :
+`start` et `done` s'enchaînent directement (dépôt à un seul utilisateur).
 
 ## Deux machines, un dépôt
 
